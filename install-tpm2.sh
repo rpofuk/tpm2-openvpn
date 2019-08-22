@@ -1,6 +1,6 @@
 set -e
 
-useradd -r -s /bin/false tss
+id -u tss &>/dev/null || useradd -r -s /bin/false tss
 
 sudo apt-get update
 sudo apt-get install -y git
@@ -65,6 +65,7 @@ sudo make install
 
 
 sudo ldconfig
+chown tss:tss /dev/tpm*
 sudo systemctl enable tpm2-abrmd.service
 sudo systemctl start tpm2-abrmd.service
 
