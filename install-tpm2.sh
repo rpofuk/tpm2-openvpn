@@ -69,7 +69,6 @@ chown tss:tss /dev/tpm*
 sudo systemctl enable tpm2-abrmd.service
 sudo systemctl start tpm2-abrmd.service
 
-sudo chmod +x tpm2.sh
 
 sudo apt-get install -y liblz4-dev
 sudo apt-get install -y liblzo2-dev
