@@ -1,6 +1,8 @@
-set -e
+#!/bin/bash 
 
-id -u tss &>/dev/null || useradd -r -s /bin/false tss
+set -xe
+
+id -u tss 2>/dev/null || useradd -r -s /bin/false tss
 
 sudo apt-get update
 sudo apt-get install -y git
@@ -24,7 +26,7 @@ git clone https://github.com/tpm2-software/tpm2-tss.git
 cd tpm2-tss
 rm -rf /usr/local/share/man/man3/Tss2_TctiLdr_Initialize_Ex.3
 ./bootstrap
-./configure
+./configure --with-udevrulesdir=/etc/udev/rules.d
 make check
 sudo make install
 
@@ -58,7 +60,7 @@ rm -rf tpm2-tss-engine
 git clone https://github.com/tpm2-software/tpm2-tss-engine.git
 cd tpm2-tss-engine
 ./bootstrap
-./configure
+./configure 
 make check
 sudo make install
 
