@@ -1,6 +1,6 @@
 set -e
 
-id -u tss &>/dev/null || useradd -r -s /bin/false tss
+id -u tss 2>/dev/null || useradd -r -s /bin/false tss
 
 sudo apt-get update
 sudo apt-get install -y git
@@ -58,7 +58,7 @@ rm -rf tpm2-tss-engine
 git clone https://github.com/tpm2-software/tpm2-tss-engine.git
 cd tpm2-tss-engine
 ./bootstrap
-./configure
+./configure --with-udevrulesdir=/etc/udev/rules.d
 make check
 sudo make install
 
