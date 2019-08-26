@@ -84,3 +84,33 @@ make
 sudo rm -rf /usr/sbin/openvpn
 sudo ln -s $PWD/src/openvpn/openvpn /usr/sbin/openvpn
 
+cat <<EOF >~/.tpm2/config
+# Type can be device/socket/tabrmd
+type abrmd:bus_name=com.intel.tss2.Tabrmd
+# Hostname to connect when using socket
+# hostname localhost
+# Port number of TPM socket to connect to
+# port 2321
+# Device to use as TPM
+device /dev/tpmrm0
+# Sign using encrypt in case TPM doesn't support hash format
+# For example SSH use SHA512 which isn't supported by all TPM's
+# Enabling this option requires key's to be encryption keys instead of signing only keys
+sign-using-encrypt true
+# Set login_required in case keys are protected by a password
+# Notice currently only a single password for all keys is supported
+# Depending on the TPM settings, providing wrong passwords can lead to a lockout
+login-required false
+# Enable logging
+# None: 0
+# Error: 1
+# Warning: 2
+# Info: 3
+# Verbose: 4
+# Debug: 5
+log-level 2
+# Set log file location or use stdout/stderr
+log stderr
+#############################
+EOF
+
