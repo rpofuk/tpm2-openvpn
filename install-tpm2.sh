@@ -1,4 +1,4 @@
-set -e
+set -xe
 
 id -u tss 2>/dev/null || useradd -r -s /bin/false tss
 
