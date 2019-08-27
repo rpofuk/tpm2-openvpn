@@ -108,7 +108,7 @@ git checkout tags/2.3.0
 rm -rf /usr/local/share/man/man3/Tss2_TctiLdr_Initialize_Ex.3
 ./bootstrap || echo "Attemt 1"
 ./bootstrap
-./configure --prefix=/usr
+./configure
 make check
 sudo make install
 
@@ -126,7 +126,7 @@ git checkout tags/2.2.0
 ./configure --with-dbuspolicydir=/etc/dbus-1/system.d \
     --with-udevrulesdir=/usr/lib/udev/rules.d \
     --with-systemdsystemunitdir=/usr/lib/systemd/system \
-    --libdir=/usr/lib64 --prefix=/usr
+    --libdir=/usr/lib64 
 dbus-launch make check
 sudo make install
 
@@ -138,7 +138,7 @@ cd tpm2-tools
 git checkout tags/4.0-rc1
 ./bootstrap || echo "Attemt 1"
 ./bootstrap
-./configure --prefix=/usr
+./configure
 make check
 sudo make install
 
@@ -176,7 +176,7 @@ make
 sudo rm -rf /usr/sbin/openvpn
 sudo ln -s $PWD/src/openvpn/openvpn /usr/sbin/openvpn
 
-echo "TPM2TOOLS_TCTI=tabrmd:bus_name=com.intel.tss2.Tabrmd" | sudo tee -a /etc/environment
+echo "TPM2TOOLS_TCTI=device:/dev/tpmrm0 | sudo tee -a /etc/environment
 
 echo "Done"
 ./configure 
