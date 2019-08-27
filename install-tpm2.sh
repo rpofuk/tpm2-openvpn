@@ -116,3 +116,8 @@ log stderr
 #############################
 EOF
 
+
+sudo echo "TPM2TOOLS_TCTI=abrmd:bus_name=com.intel.tss2.Tabrmd" > /etc/environment
+
+echo "Done"
+
