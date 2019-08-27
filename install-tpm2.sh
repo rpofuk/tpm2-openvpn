@@ -94,7 +94,7 @@ WantedBy=multi-user.target
 
 EOL
 
-mv /tmp/tpm2-abrmd.service  /etc/systemd/system/tpm2-abrmd.service
+sudo mv /tmp/tpm2-abrmd.service  /etc/systemd/system/tpm2-abrmd.service
 
 sudo ldconfig
 sudo systemctl daemon-reload
