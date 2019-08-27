@@ -76,7 +76,7 @@ git checkout tags/v1.0.1
 make check
 sudo make install
 
-sudo cat >/etc/systemd/system/tpm2-abrmd.service <<'EOL'
+sudo cat > /tmp/tpm2-abrmd.service <<'EOL'
 [Unit]
 Description=TPM2 Access Broker and Resource Management Daemon
 
@@ -94,6 +94,7 @@ WantedBy=multi-user.target
 
 EOL
 
+mv /tmp/tpm2-abrmd.service  /etc/systemd/system/tpm2-abrmd.service
 
 sudo ldconfig
 sudo systemctl daemon-reload
