@@ -27,7 +27,8 @@ mkdir -p $HOME/install
 rm -rf tpm2-tss
 git clone https://github.com/tpm2-software/tpm2-tss.git
 cd tpm2-tss
-rm -rf /usr/local/share/man/man3/Tss2_TctiLdr_Initialize_Ex.3
+sudo rm -rf /usr/local/share/man/man3/Tss2_TctiLdr_Initialize_Ex.3
+./bootstrap || echo "Attempt 1"
 ./bootstrap
 ./configure --with-udevrulesdir=/etc/udev/rules.d
 make check
