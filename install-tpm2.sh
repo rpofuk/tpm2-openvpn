@@ -91,8 +91,8 @@ make
 sudo rm -rf /usr/sbin/openvpn
 sudo ln -s $PWD/src/openvpn/openvpn /usr/sbin/openvpn
 
-echo "TPM2TOOLS_TCTI=device:/dev/tpmrm0" | sudo tee -a /etc/environmen
-
+echo "TPM2TOOLS_TCTI=tabrmd:bus_name=com.intel.tss2.Tabrmd" | sudo tee -a /etc/environment 
+ 
 echo "Done"
 
 
