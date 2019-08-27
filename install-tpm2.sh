@@ -2,7 +2,7 @@
 
 set -xe
 
-id -u tss 2>/dev/null || useradd -r -s /bin/false tss
+sudo id -u tss 2>/dev/null || sudo useradd -r -s /bin/false tss
 
 sudo apt-get update
 sudo apt-get install -y git
@@ -73,9 +73,7 @@ sudo make install
 
 
 sudo ldconfig
-chown tss:tss /dev/tpm*
 sudo systemctl enable tpm2-abrmd.service
-sudo systemctl start tpm2-abrmd.service
 
 
 sudo apt-get install -y liblz4-dev
@@ -92,7 +90,6 @@ make
 sudo rm -rf /usr/sbin/openvpn
 sudo ln -s $PWD/src/openvpn/openvpn /usr/sbin/openvpn
 
-sudo echo "TPM2TOOLS_TCTI=tabrmd:bus_name=com.intel.tss2.Tabrmd" > /etc/environment
+echo "TPM2TOOLS_TCTI=tabrmd:bus_name=com.intel.tss2.Tabrmd" | sudo tee -a /etc/environment
 
 echo "Done"
-
