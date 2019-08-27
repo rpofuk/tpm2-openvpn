@@ -41,6 +41,7 @@ rm -rf tpm2-abrmd
 git clone https://github.com/tpm2-software/tpm2-abrmd.git
 cd tpm2-abrmd
 git checkout tags/2.2.0
+./bootstrap || echo "Attempt 1"
 ./bootstrap
 ./configure --with-dbuspolicydir=/etc/dbus-1/system.d
 dbus-launch make check
@@ -51,6 +52,7 @@ sudo make install
 git clone https://github.com/tpm2-software/tpm2-tools.git
 cd tpm2-tools
 #git checkout tags/3.2.0
+./bootstrap || echo "Attempt 1"
 ./bootstrap
 ./configure
 make check
@@ -62,6 +64,7 @@ sudo make install
 git clone https://github.com/tpm2-software/tpm2-tools.git
 cd tpm2-tools
 #git checkout tags/3.2.0
+./bootstrap || echo "Attempt 1"
 ./bootstrap
 ./configure
 make check
