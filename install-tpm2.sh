@@ -24,9 +24,11 @@ mkdir -p $HOME/install
 
 
 # install TSS itself
+cd $HOME/install
 rm -rf tpm2-tss
 git clone https://github.com/tpm2-software/tpm2-tss.git
 cd tpm2-tss
+git checkout tags/2.3.0
 sudo rm -rf /usr/local/share/man/man3/Tss2_TctiLdr_Initialize_Ex.3
 ./bootstrap || echo "Attempt 1"
 ./bootstrap
@@ -38,6 +40,7 @@ sudo make install
 
 
 # Install abrmd itself
+cd $HOME/install
 rm -rf tpm2-abrmd
 git clone https://github.com/tpm2-software/tpm2-abrmd.git
 cd tpm2-abrmd
@@ -50,9 +53,10 @@ sudo make install
 
 
 # Install tools itself
+cd $HOME/install
 git clone https://github.com/tpm2-software/tpm2-tools.git
 cd tpm2-tools
-#git checkout tags/3.2.0
+git checkout tags/4.0-rc1
 ./bootstrap || echo "Attempt 1"
 ./bootstrap
 ./configure
@@ -62,18 +66,37 @@ sudo make install
 
 
 # install TSS engine
-git clone https://github.com/tpm2-software/tpm2-tools.git
-cd tpm2-tools
-#git checkout tags/3.2.0
-./bootstrap || echo "Attempt 1"
+cd $HOME/install
+rm -rf tpm2-tss-engine
+git clone https://github.com/tpm2-software/tpm2-tss-engine.git
+cd tpm2-tss-engine
+git checkout tags/v1.0.1
 ./bootstrap
 ./configure
 make check
 sudo make install
 
+sudo cat >/etc/systemd/system/tpm2-abrmd.service <<'EOL'
+[Unit]
+Description=TPM2 Access Broker and Resource Management Daemon
+
+[Service]
+Type=dbus
+Restart=always
+RestartSec=5
+BusName=com.intel.tss2.Tabrmd
+StandardOutput=syslog
+ExecStart=/usr/local/sbin/tpm2-abrmd --tcti "device:/dev/tpmrm0"
+User=tss
+
+[Install]
+WantedBy=multi-user.target
+
+EOL
 
 
 sudo ldconfig
+sudo systemctl daemon-reload
 sudo systemctl enable tpm2-abrmd.service
 
 
@@ -95,4 +118,5 @@ echo "TPM2TOOLS_TCTI=tabrmd:bus_name=com.intel.tss2.Tabrmd" | sudo tee -a /etc/e
  
 echo "Done"
 
+echo 'Reboot? (y/n)' && read x && [[ "$x" == "y" ]] && /sbin/reboot;
 
