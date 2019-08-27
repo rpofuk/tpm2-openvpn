@@ -1,5 +1,6 @@
 #!/bin/bash
 
+set -e 
 
 tpm2_createprimary -C o -c parent.ctx -G rsa2048:null:aes128cfb
 tpm2_evictcontrol -c parent.ctx
