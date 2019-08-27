@@ -21,17 +21,17 @@ mkdir -p $HOME/.tpm2
 rm -fr $HOME/install
 mkdir -p $HOME/install
 
-cd $HOME/install
 
 
 # install TSS itself
+cd $HOME/install
 rm -rf tpm2-tss
 git clone https://github.com/tpm2-software/tpm2-tss.git
 cd tpm2-tss
 git checkout tags/2.3.0
 rm -rf /usr/local/share/man/man3/Tss2_TctiLdr_Initialize_Ex.3
 ./bootstrap
-./configure --with-udevrulesdir=/etc/udev/rules.d
+./configure --prefix=/usr
 make check
 sudo make install
 
@@ -39,28 +39,34 @@ sudo make install
 
 
 # Install abrmd itself
+cd $HOME/install
 rm -rf tpm2-abrmd
 git clone https://github.com/tpm2-software/tpm2-abrmd.git
 cd tpm2-abrmd
 git checkout tags/2.2.0
 ./bootstrap
-./configure --with-dbuspolicydir=/etc/dbus-1/system.d
+./configure --with-dbuspolicydir=/etc/dbus-1/system.d \
+    --with-udevrulesdir=/usr/lib/udev/rules.d \
+    --with-systemdsystemunitdir=/usr/lib/systemd/system \
+    --libdir=/usr/lib64 --prefix=/usr
 dbus-launch make check
 sudo make install
 
 
 # Install tools itself
+cd $HOME/install
 git clone https://github.com/tpm2-software/tpm2-tools.git
 cd tpm2-tools
-git checkout tags/3.2.1-rc0
+git checkout tags/4.0-rc1
 ./bootstrap
-./configure
+./configure --prefix=/usr
 make check
 sudo make install
 
 
 
 # install TSS engine
+cd $HOME/install
 rm -rf tpm2-tss-engine
 git clone https://github.com/tpm2-software/tpm2-tss-engine.git
 cd tpm2-tss-engine
