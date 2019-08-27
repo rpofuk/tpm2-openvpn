@@ -176,33 +176,8 @@ make
 sudo rm -rf /usr/sbin/openvpn
 sudo ln -s $PWD/src/openvpn/openvpn /usr/sbin/openvpn
 
-echo "TPM2TOOLS_TCTI=device:/dev/tpmrm0 | sudo tee -a /etc/environment
+echo "TPM2TOOLS_TCTI=device:/dev/tpmrm0" | sudo tee -a /etc/environmen
 
 echo "Done"
-./configure 
-make check
-sudo make install
 
 
-
-sudo ldconfig
-sudo systemctl enable tpm2-abrmd.service
-
-
-sudo apt-get install -y liblz4-dev
-sudo apt-get install -y liblzo2-dev
-sudo apt-get install -y libpam-dev
-sudo apt-get install net-tools
-
-git clone https://github.com/rpofuk/openvpn.git
-cd openvpn
-git checkout feature/tpm2-tss
-autoreconf -i -v -f
-./configure
-make 
-sudo rm -rf /usr/sbin/openvpn
-sudo ln -s $PWD/src/openvpn/openvpn /usr/sbin/openvpn
-
-echo "TPM2TOOLS_TCTI=tabrmd:bus_name=com.intel.tss2.Tabrmd" | sudo tee -a /etc/environment
-
-echo "Done"
