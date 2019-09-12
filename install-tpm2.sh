@@ -5,6 +5,7 @@ set -xe
 sudo id -u tss 2>/dev/null || sudo useradd -r -s /bin/false tss
 
 sudo apt-get update
+sudo apt-get install -y build-essential
 sudo apt-get install -y git
 # install package manager deps for tools
 sudo apt-get install -y pandoc autoconf-archive
