@@ -117,7 +117,9 @@ sudo rm -rf /usr/sbin/openvpn
 sudo ln -s $PWD/src/openvpn/openvpn /usr/sbin/openvpn
 
 echo "TPM2TOOLS_TCTI=tabrmd:bus_name=com.intel.tss2.Tabrmd" | sudo tee -a /etc/environment 
- 
+
+sudo apt install -y chromium-browser
+
 echo "Done"
 
 echo 'Reboot? (y/n)' && read x && [[ "$x" == "y" ]] && /sbin/reboot;
