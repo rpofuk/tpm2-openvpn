@@ -124,7 +124,7 @@ sudo dpkg -i google-chrome-stable_current_amd64.deb
 
 
 echo "INSTALL NODE"
-sudo apt-get install curl
+sudo apt-get install -y curl
 
 curl -sSL https://deb.nodesource.com/gpgkey/nodesource.gpg.key | sudo apt-key add -
 
