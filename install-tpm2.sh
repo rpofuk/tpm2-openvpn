@@ -118,8 +118,23 @@ sudo ln -s $PWD/src/openvpn/openvpn /usr/sbin/openvpn
 
 echo "TPM2TOOLS_TCTI=tabrmd:bus_name=com.intel.tss2.Tabrmd" | sudo tee -a /etc/environment 
 
+echo "INSTALL CHROME"
 wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 sudo dpkg -i google-chrome-stable_current_amd64.deb
+
+
+echo "INSTALL NODE"
+sudo apt-get install curl
+
+curl -sSL https://deb.nodesource.com/gpgkey/nodesource.gpg.key | sudo apt-key add -
+
+VERSION=node_12.x
+DISTRO="disco"
+echo "deb https://deb.nodesource.com/$VERSION $DISTRO main" | sudo tee /etc/apt/sources.list.d/nodesource.list
+echo "deb-src https://deb.nodesource.com/$VERSION $DISTRO main" | sudo tee -a /etc/apt/sources.list.d/nodesource.list
+
+sudo apt-get update
+sudo apt-get install -y nodejs
 
 
 echo "Done"
