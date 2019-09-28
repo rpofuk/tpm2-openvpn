@@ -118,7 +118,9 @@ sudo ln -s $PWD/src/openvpn/openvpn /usr/sbin/openvpn
 
 echo "TPM2TOOLS_TCTI=tabrmd:bus_name=com.intel.tss2.Tabrmd" | sudo tee -a /etc/environment 
 
-sudo apt install -y chromium-browser
+wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+sudo dpkg -i google-chrome-stable_current_amd64.deb
+
 
 echo "Done"
 
