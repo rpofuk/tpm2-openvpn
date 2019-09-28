@@ -5,6 +5,8 @@ set -e
 echo 'Enter domain:' && read domain
 echo 'Enter env:' && read environment
 
+client=$(basename *.ovpn .ovpn)
+
 tpm2_clear
 echo "### Creating primary"
 tpm2_createprimary  -C o -c parent.ctx -G rsa2048:null:aes128cfb
@@ -23,15 +25,15 @@ tpm2_import  -i $1 -r private_key.tss -u public_key.tss -Grsa -C parent.ctx
 tpm2_load  -C parent.ctx -u public_key.tss -r private_key.tss -c wzhpor.ctx
 tpm2_evictcontrol -c wzhpor.ctx
 
-npx @rpofuk/tpm2-asn-packer p ${HANDLE##*x} private_key.tss public_key.tss ewp401007.tss
+npx @rpofuk/tpm2-asn-packer p ${HANDLE##*x} private_key.tss public_key.tss "${client}".tss
 
 
-nmcli connection import type openvpn file ewp401007.ovpn
-nmcli connection modify ewp401007 ipv4.never-default yes
-nmcli connection modify ewp401007 ipv4.dns-search "${domain}"
-nmcli connection modify ewp401007 +vpn.data key=$(realpath ewp401007.tss)
-nmcli connection modify ewp401007 +vpn.data cert=$(realpath ewp401007.crt)
-nmcli connection modify ewp401007 ipv6.method ignore
+nmcli connection import type openvpn file "${client}".ovpn
+nmcli connection modify "${client}" ipv4.never-default yes
+nmcli connection modify "${client}" ipv4.dns-search "${domain}"
+nmcli connection modify "${client}" +vpn.data key=$(realpath "${client}".tss)
+nmcli connection modify "${client}" +vpn.data cert=$(realpath "${client}".crt)
+nmcli connection modify "${client}" ipv6.method ignore
 
 
 sudo rm -f /etc/network/if-up.d/ewp
