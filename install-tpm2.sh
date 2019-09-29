@@ -1,12 +1,13 @@
 #!/bin/bash 
 
-set -xe
+set -e
 
 sudo id -u tss 2>/dev/null || sudo useradd -r -s /bin/false tss
 
 sudo chown tss:tss /dev/tpm*
 
 sudo apt-get update
+sudo apt-get upgrade -y
 sudo apt-get install -y build-essential
 sudo apt-get install -y git
 # install package manager deps for tools
@@ -138,18 +139,21 @@ echo "deb-src https://deb.nodesource.com/$VERSION $DISTRO main" | sudo tee -a /e
 sudo apt-get update
 sudo apt-get install -y nodejs
 
+echo "Done installing node js"
 
 echo "Make  NewtorkManager run as root due to permissions problem"
 echo "More info: https://askubuntu.com/questions/902710/openvpn-restart-breaks-connection"
 
-sudo mkdir -p /etc/systemd/system/NetworkManager.service.d/
 
+sudo mkdir -p /etc/systemd/system/NetworkManager.service.d/
 echo '# Disable NetworkManager OpenVPN plug-in from performing chroot and  dropping privileges by default (null assignment) 
 [Service]
 Environment="NM_OPENVPN_CHROOT=" 
 Environment="NM_OPENVPN_USER="
 Environment="NM_OPENVPN_GROUP="
 ' | tee /etc/systemd/system/NetworkManager.service.d/disable-openvpn-reduced-privileges.conf
+
+echo "Setup of NM done"
 
 sudo systemctl daemon-reload
 sudo systemctl restart network-manager.service 
