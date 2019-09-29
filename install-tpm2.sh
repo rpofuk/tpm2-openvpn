@@ -161,7 +161,7 @@ sudo systemctl daemon-reload
 sudo systemctl restart network-manager.service 
 
 echo "Set favorites"
-gsettings set org.gnome.shell favorite-apps "['ubiquity.desktop', 'org.gnome.Nautilus.desktop', 'rhythmbox.desktop', 'libreoffice-writer.desktop', 'org.gnome.Software.desktop']"
+gsettings set org.gnome.shell favorite-apps "['google-chrome.desktop', 'ubiquity.desktop', 'org.gnome.Nautilus.desktop', 'rhythmbox.desktop', 'libreoffice-writer.desktop', 'org.gnome.Software.desktop']"
 
 
 echo "Done"
