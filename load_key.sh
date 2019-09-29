@@ -21,7 +21,7 @@ cat primary.log
 echo "HANDLE ${HANDLE##*x}"
 
 
-tpm2_import  -i $1 -r private_key.tss -u public_key.tss -Grsa -C parent.ctx
+tpm2_import  -i "${client}.key" -r private_key.tss -u public_key.tss -Grsa -C parent.ctx
 tpm2_load  -C parent.ctx -u public_key.tss -r private_key.tss -c wzhpor.ctx
 tpm2_evictcontrol -c wzhpor.ctx
 
