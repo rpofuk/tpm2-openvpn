@@ -137,7 +137,6 @@ sudo apt-get update
 sudo apt-get install -y nodejs
 
 
-
 echo "Make  NewtorkManager run as root due to permissions problem"
 echo "More info: https://askubuntu.com/questions/902710/openvpn-restart-breaks-connection"
 
@@ -150,7 +149,11 @@ Environment="NM_OPENVPN_USER="
 Environment="NM_OPENVPN_GROUP="
 ' | tee /etc/systemd/system/NetworkManager.service.d/disable-openvpn-reduced-privileges.conf
 
+
+echo "Set favorites"
+gsettings set org.gnome.shell favorite-apps "['ubiquity.desktop', 'org.gnome.Nautilus.desktop', 'rhythmbox.desktop', 'libreoffice-writer.desktop', 'org.gnome.Software.desktop']"
+
+
 echo "Done"
 
 echo 'Reboot? (y/n)' && read x && [[ "$x" == "y" ]] && /sbin/reboot;
-
