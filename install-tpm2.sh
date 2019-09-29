@@ -137,6 +137,19 @@ sudo apt-get update
 sudo apt-get install -y nodejs
 
 
+
+echo "Make  NewtorkManager run as root due to permissions problem"
+echo "More info: https://askubuntu.com/questions/902710/openvpn-restart-breaks-connection"
+
+sudo mkdir -p /etc/systemd/system/NetworkManager.service.d/
+
+echo '# Disable NetworkManager OpenVPN plug-in from performing chroot and  dropping privileges by default (null assignment) 
+[Service]
+Environment="NM_OPENVPN_CHROOT=" 
+Environment="NM_OPENVPN_USER="
+Environment="NM_OPENVPN_GROUP="
+' | tee /etc/systemd/system/NetworkManager.service.d/disable-openvpn-reduced-privileges.conf
+
 echo "Done"
 
 echo 'Reboot? (y/n)' && read x && [[ "$x" == "y" ]] && /sbin/reboot;
