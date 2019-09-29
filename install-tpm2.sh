@@ -146,12 +146,14 @@ echo "More info: https://askubuntu.com/questions/902710/openvpn-restart-breaks-c
 
 
 sudo mkdir -p /etc/systemd/system/NetworkManager.service.d/
-echo '# Disable NetworkManager OpenVPN plug-in from performing chroot and  dropping privileges by default (null assignment) 
+sudo touch /etc/systemd/system/NetworkManager.service.d/disable-openvpn-reduced-privileges.conf
+
+echo '# Disable NetworkManager OpenVPN plug-in from performing chroot and  dropping privileges by default (null assignment)
 [Service]
-Environment="NM_OPENVPN_CHROOT=" 
+Environment="NM_OPENVPN_CHROOT="
 Environment="NM_OPENVPN_USER="
 Environment="NM_OPENVPN_GROUP="
-' | tee /etc/systemd/system/NetworkManager.service.d/disable-openvpn-reduced-privileges.conf
+' | sudo tee /etc/systemd/system/NetworkManager.service.d/disable-openvpn-reduced-privileges.conf
 
 echo "Setup of NM done"
 
